@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 
 const Header = () => {
@@ -21,9 +21,9 @@ const Header = () => {
           <Link to='/about' className="hover:text-yellow-300">About</Link>
           <Link to='/contact' className="hover:text-yellow-300">Contact</Link>
           <Link to='/gallery' className="hover:text-yellow-300">Gallery</Link>
-          <Link to='/blog' className="hover:text-yellow-300">Blog</Link>
+          <Link to='/blog' className="hover:text-yellow-300 cursor-pointer">Blog</Link>
           <button className="border rounded-md px-4 py-1">
-          <Link to='/login'>Login</Link>
+          <NavLink to='/login'>Login</NavLink>
           </button>
           {/* <a href="#videos" className="hover:text-yellow-300">Videos</a>
           <a href="#contact" className="hover:text-yellow-300">Contact</a>
@@ -46,9 +46,9 @@ const Header = () => {
           <Link to='/contact' className="block hover:text-yellow-300">Contact</Link>
           <Link to='/gallery' className="block hover:text-yellow-300">Gallery</Link>
           <Link to='/blog' className="block hover:text-yellow-300">Blog</Link>
-          <button className="border rounded-md px-4 py-2 w-full">
-          <Link to='/login'>Login</Link>
-          </button>
+          <button type="submit" className="border rounded-md px-4 py-2 w-full cursor-pointer"> 
+          <NavLink to='/login'>Login</NavLink>
+          </button> 
           {/* <a href="/" className="block hover:text-yellow-300">Home</a>
           <a href="#gallery" className="block hover:text-yellow-300">Gallery</a>
           <a href="#videos" className="block hover:text-yellow-300">Videos</a>

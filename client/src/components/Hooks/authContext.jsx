@@ -7,10 +7,10 @@ const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Verify user on initial load
   useEffect(() => {
     const verifyUser = async () => {
       try {
+        setLoading(true)
         const response = await api.get("/users/verify"); 
         if (response.data.success) {
           setUser(response.data.user);
@@ -18,7 +18,7 @@ const AuthContext = ({ children }) => {
           setUser(null);
         }
       } catch (error) {
-        console.log(error);
+        console.log('Something Went Wrong!' || error.message);
         setUser(null);
       } finally {
         setLoading(false);
