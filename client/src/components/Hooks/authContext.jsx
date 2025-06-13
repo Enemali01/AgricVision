@@ -11,7 +11,7 @@ const AuthContext = ({ children }) => {
     const verifyUser = async () => {
       try {
         setLoading(true)
-        const response = await api.get("/users/verify"); 
+        const response = await api.get("/users/verify", {withCredentials: true}); 
         if (response.data.success) {
           setUser(response.data.user);
         } else {
