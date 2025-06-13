@@ -17,7 +17,6 @@ import bodyParser from 'body-parser';
 import { Posts } from './models/post.model.js';
 import cookieParser from 'cookie-parser';
 
-
 // DB connection
 dbconnect();
 
