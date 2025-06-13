@@ -25,10 +25,26 @@ const app = express();
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://agricvision.onrender.com'
+];
+
 app.use(cors({
-   origin:process.env.BASE_URL,
-   credentials: true,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: 'PUT, POST, GET, DELETE, PATCH, HEAD'
 }));
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -97,3 +113,122 @@ app.post('/mail', (req,res) =>{
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
+
+
+// import dotenv from 'dotenv'
+// dotenv.config();
+// import express from 'express'
+// import cors from 'cors'
+// import nodemailer from 'nodemailer'
+// import path from 'path';
+// import { fileURLToPath } from 'url';
+// import handlebars from 'handlebars'
+// import fs from 'fs'
+// import bodyParser from 'body-parser';
+// import cookieParser from 'cookie-parser';
+
+// import { dbconnect } from './dbConfig/dbConfig.js';
+// import { Posts } from './models/post.model.js';
+
+// // Routes
+// import mail from './routes/mail.route.js'
+// import users from './routes/user.route.js'
+// import uploads from './routes/fileupload.route.js'
+// import members from './routes/members.route.js'
+// import post from './routes/post.route.js'
+
+// // DB connection
+// dbconnect();
+
+// const app = express();
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+// // Middlewares
+// app.use(cookieParser());
+// app.use(bodyParser.json());
+// app.use(express.urlencoded({ extended: true }));
+
+// // CORS setup (IMPORTANT FIX)
+// const allowedOrigins = [
+//   'http://localhost:5173',
+//   'https://agricvision.onrender.com'
+// ];
+
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+// }));
+
+// // Static folders
+// app.use('/public', express.static('public'));
+// app.use('/upload', express.static(path.join(__dirname, 'public')));
+
+// // Nodemailer (fixed response scope)
+// function sendMail(firstname, lastname, phone, email, message, res) {
+//   const transporter = nodemailer.createTransport({
+//     host: 'smtp.gmail.com',
+//     port: 465,
+//     secure: true,  
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.EMAIL,
+//       pass: process.env.PASSWORD
+//     },
+//     tls: { rejectUnauthorized: false }
+//   });
+
+//   const template = handlebars.compile(fs.readFileSync(path.join(__dirname, 'templates', 'feedback.hbs'), 'utf8'));
+//   const html = template({ firstname, email, message, phone, lastname });
+
+//   const mailOptions = {
+//     from: email,
+//     to: process.env.EMAIL,
+//     subject: 'A New Mail',
+//     html
+//   };
+
+//   transporter.sendMail(mailOptions, (error) => {
+//     if (error) {
+//       console.log(error);
+//       return res.status(500).json({ message: 'Mail failed', error });
+//     }
+//     return res.json({ message: 'Mail sent successfully' });
+//   });
+// }
+
+// // APIs
+// app.use('/api/mail', mail);
+// app.use('/api/users', users);
+// app.use('/api/gallery', uploads);
+// app.use('/api/member', members);
+// app.use('/api/blog', post);
+
+// app.post('/mail', (req, res) => {
+//   const { firstname, lastname, phone, email, message } = req.body;
+//   sendMail(firstname, lastname, phone, email, message, res);
+// });
+
+
+// // === ⚠️ IMPORTANT: Handle React client routes for SPA ===
+// // Add this **AFTER all your API routes**
+// if (process.env.NODE_ENV === 'production') {
+//   const clientBuildPath = path.join(__dirname, 'dist'); // or 'build' if CRA
+//   app.use(express.static(clientBuildPath));
+
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(clientBuildPath, 'index.html'));
+//   });
+// }
+
+// // Start Server
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on port ${PORT}`);
+// });
