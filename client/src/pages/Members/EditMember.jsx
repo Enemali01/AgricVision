@@ -38,11 +38,9 @@ const handleSubmit = async (e) =>{
   try {
       setLoading(true);
       const response = await api.put(`/member/update/${id}`,member,
-      {
-      headers:{
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
+      
+      {withCredentials: true}
+    )
     setMember(response.data)
        toast.success("Member details updated!"); 
   } catch (error) {

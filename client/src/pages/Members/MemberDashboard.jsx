@@ -19,11 +19,7 @@ const MemberDashboard = () => {
     const fetchMember = async()=>{
       try {
         setLoading(true);
-        const response = await api.get('/member/getMember', {
-          headers:{
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        })
+        const response = await api.get('/member/getMember', {withCredentials: true})
         if(response.data.message){
           let sno = 1;
           const data = await response.data.members.map((member) => ({
