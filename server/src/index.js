@@ -106,8 +106,14 @@ app.post('/mail', (req,res) =>{
 
   });
   
-// Pagination
+if (process.env.NODE_ENV === 'production') {
+  const clientBuildPath = path.join(__dirname, 'dist'); // or 'build' if CRA
+  app.use(express.static(clientBuildPath));
 
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
 
 
 app.listen(process.env.PORT, () => {
