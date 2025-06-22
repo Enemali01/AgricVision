@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../utils/api';
+import { Link } from 'react-router-dom';
+
 
 const LatestBlog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -38,7 +40,7 @@ const LatestBlog = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
                   <p className="text-gray-600">{blog.excerpt}</p>
-                  <a href={`/blog/${blog._id}`} className="text-green-600 hover:underline mt-4 block">Read More</a>
+                  <Link to={`/blog/${blog._id}`} className="text-green-600 hover:underline mt-4 block">Read More</Link>
                 </div>
               </div>
             ))}
