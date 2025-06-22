@@ -4,7 +4,6 @@ import api from '../../utils/api';
 import { toast } from 'react-toastify';
 
 
-
 const EditMember = () => {
  const members = {
     lastname: '',
@@ -24,7 +23,7 @@ const inputHandler = (e) => {
 }
 
 useEffect(()=>{
-  api.get(`/api/member/member/${id}`)
+  api.get(`/member/member/${id}`)
   .then((response)=>{
     setMember(response.data)
   })
