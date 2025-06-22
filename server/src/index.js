@@ -98,12 +98,12 @@ app.use('/api/blog', post);
 
 
 // Mail api
-app.post('/mail', (req,res) =>{
-  const {firstname, lastname, phone, email, message} = req.body;
-  	sendMail(firstname, lastname, phone, email, message);
-    // \console.log(firstname, lastname, phone, email, message);
+// app.post('/mail', (req,res) =>{
+//   const {firstname, lastname, phone, email, message} = req.body;
+//   	sendMail(firstname, lastname, phone, email, message);
+//     console.log(firstname, lastname, phone, email, message);
 
-  });
+//   });
   
 if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.join(__dirname, 'dist'); // or 'build' if CRA

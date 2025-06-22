@@ -26,7 +26,7 @@ export default function Contact() {
     };
 
     try {
-      const response = await api.post('/mail', dataToSend);
+      const response = await api.post(`/mail/mail`, dataToSend);
        if(response.data){
         toast.success('Mail Sent');
        }
