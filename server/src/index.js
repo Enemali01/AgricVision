@@ -52,41 +52,7 @@ app.use('/public', express.static('public'));
 app.use('upload', express.static(path.join(__dirname, 'public')));
 
 
-// Nodemailer
-function sendMail(firstname, lastname, phone, email, message){
-    
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,  
-        service: 'gmail',
-        auth: {
-          user:process.env.EMAIL,
-          pass:process.env.PASSWORD
-        },
-        tls : { rejectUnauthorized: false }
-  	 })
-     const subject = 'A New Mail'
-     const to = process.env.EMAIL ;
-     const from = email;
-     const template = handlebars.compile(fs.readFileSync(path.join(__dirname, 'templates/','feedback.hbs'), 'utf8'));
-     const html = template({firstname:firstname, email:email, message:message, phone:phone, lastname:lastname})
 
-     const mailOptions = {
-      from:email,
-      to:process.env.EMAIL, subject,
-      html
-     }
-
-      transporter.sendMail(mailOptions, (error) => { 
-        if(error){
-          console.log(error);  
-        }else{
-          res.json({message:'Mail Sent'})
-          console.log({message});
-        }
-      })
-}
 
 
 // Routes api
@@ -96,14 +62,6 @@ app.use('/api/gallery', uploads);
 app.use('/api/member', members);
 app.use('/api/blog', post);
 
-
-// Mail api
-// app.post('/mail', (req,res) =>{
-//   const {firstname, lastname, phone, email, message} = req.body;
-//   	sendMail(firstname, lastname, phone, email, message);
-//     console.log(firstname, lastname, phone, email, message);
-
-//   });
   
 if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.join(__dirname, 'dist'); // or 'build' if CRA
