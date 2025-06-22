@@ -53,8 +53,6 @@ app.use('upload', express.static(path.join(__dirname, 'public')));
 
 
 
-
-
 // Routes api
 app.use('/api/mail', mail);
 app.use('/api/users', users);
@@ -62,6 +60,8 @@ app.use('/api/gallery', uploads);
 app.use('/api/member', members);
 app.use('/api/blog', post);
 
+
+// Mail api
   
 if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.join(__dirname, 'dist'); // or 'build' if CRA
